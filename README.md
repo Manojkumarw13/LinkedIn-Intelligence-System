@@ -16,20 +16,25 @@ An automated n8n workflow that analyzes your LinkedIn data monthly, generates st
 
 ```mermaid
 flowchart LR
-    A[("Monthly Schedule<br/>(1st @ 9:00 AM)")] --> B["Google Drive List"]
+    A["Monthly Schedule
+    1st @ 9:00 AM"] --> B["Google Drive List"]
     A --> C["Get GitHub Repos"]
 
-    B --> D{"Diff Check<br/>(New File?)"}
+    B --> D{"Diff Check
+    New File?"}
     D -->|Yes| E["Download Export"]
     E --> F["Decompress ZIP"]
     F --> G["Filter CSVs"]
     G --> H["Read CSV Files"]
 
-    H --> I["Merge LinkedIn<br/>+ GitHub Data"]
+    H --> I["Merge LinkedIn
+    + GitHub Data"]
     C --> I
 
-    I --> J["Data Merger<br/>(Format for AI)"]
-    J --> K["AI Analysis<br/>(Groq Llama 3.3)"]
+    I --> J["Data Merger
+    Format for AI"]
+    J --> K["AI Analysis
+    Groq Llama 3.3"]
     K --> L["Convert to HTML"]
     L --> M["Send Email Report"]
     M --> N["Delete Processed File"]
