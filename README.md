@@ -14,7 +14,36 @@ An automated n8n workflow that analyzes your LinkedIn data monthly, generates st
 
 ## 🏗️ System Architecture
 
-![System Architecture](C:/Users/Manoj Kumar/.gemini/antigravity/brain/b9c733d2-583a-4840-8d95-2f0f5ab741ee/workflow_architecture_diagram_1770654028108.png)
+```mermaid
+flowchart LR
+    A[("Monthly Schedule<br/>(1st @ 9:00 AM)")] --> B["Google Drive List"]
+    A --> C["Get GitHub Repos"]
+
+    B --> D{"Diff Check<br/>(New File?)"}
+    D -->|Yes| E["Download Export"]
+    E --> F["Decompress ZIP"]
+    F --> G["Filter CSVs"]
+    G --> H["Read CSV Files"]
+
+    H --> I["Merge LinkedIn<br/>+ GitHub Data"]
+    C --> I
+
+    I --> J["Data Merger<br/>(Format for AI)"]
+    J --> K["AI Analysis<br/>(Groq Llama 3.3)"]
+    K --> L["Convert to HTML"]
+    L --> M["Send Email Report"]
+    M --> N["Delete Processed File"]
+
+    style A fill:#d5e8d4,stroke:#82b366
+    style B fill:#dae8fc,stroke:#6c8ebf
+    style C fill:#f8cecc,stroke:#b85450
+    style D fill:#fff2cc,stroke:#d6b656
+    style E fill:#dae8fc,stroke:#6c8ebf
+    style I fill:#e1d5e7,stroke:#9673a6
+    style K fill:#f5f5f5,stroke:#666666
+    style M fill:#d5e8d4,stroke:#82b366
+    style N fill:#f8cecc,stroke:#b85450
+```
 
 The system follows a modern microservices-like architecture with clear separation of concerns:
 
