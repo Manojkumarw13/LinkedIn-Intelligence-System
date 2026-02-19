@@ -236,32 +236,24 @@
     {
       "parameters": {
         "method": "POST",
-        "url": "https://api.groq.com/openai/v1/chat/completions",
-        "authentication": "predefinedCredentialType",
-        "nodeCredentialType": "groqApi",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyCT5pLRHy7mFuzTVSuRCF8UIBF7EpKFQtM",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={{ \n  {\n    \"model\": \"llama-3.3-70b-versatile\",\n    \"messages\": [\n      {\n        \"role\": \"system\",\n        \"content\": \"You are an elite LinkedIn Profile Strategist.\\n\\nYour goal is to audit the user's data and generate a strategic report.\\n\\n### CRITICAL INSTRUCTION: HANDLING MISSING DATA\\nLinkedIn data exports are often \\\"sparse\\\" (e.g., missing descriptions). usage.\\n- IF DESCRIPTIONS ARE MISSING: Do NOT just say \\\"data missing\\\". Instead, infer potential duties/impact based on the Job Title and Company Name. Example: If title is \\\"Senior Data Analyst\\\", assume they handled SQL pipelines and reporting, and suggest they HIGHLIGHT those.\\n- Label your advice as \\\"Generated Insight\\\" when inferring.\\n\\n### Input Data Format\\nThe input data starts with a SUMMARY showing row counts per section (Positions, Skills, etc). Use this to know what you have.\\nRows are labeled like `[POSITION] Title: ... | Company: ...`\\n\\n### REPORT STRUCTURE\\n\\n#### PART 1: The \\\"Red Flag\\\" Audit\\n1. Positions Analysis:\\n   - Analyze Job Titles vs Duration.\\n   - If descriptions are missing, list 3 BULLET POINTS of high-impact keywords they SHOULD add for that specific role.\\n2. Skills Audit:\\n   - Group skills by category (Tech, Soft, Tools).\\n   - Suggest 5 modern skills missing from their stack based on their recent Roles.\\n3. Profile Optimization:\\n   - Based on their most recent role, write a suggested Headline.\\n\\n#### PART 2: The Action Plan\\n1. Content Strategy: Suggest 3 post ideas based on their listed Skills or recent Roles.\\n2. Network Strategy: If connection data is sparse, give general advice on who to connect with based on their Industry.\\n\\nFormat: Clean Markdown.\"\n      },\n      {\n        \"role\": \"user\",\n        \"content\": $json.text_context\n      }\n    ],\n    \"temperature\": 0.7,\n    \"max_tokens\": 4000\n  }\n}}",
+        "jsonBody": "={{ \n  {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"You are an elite LinkedIn Profile Strategist.\\n\\nYour goal is to audit the user's data and generate a strategic intelligence report.\\n\\n### CRITICAL INSTRUCTION: HANDLING MISSING DATA\\nLinkedIn data exports are often sparse (e.g., missing descriptions).\\n- IF DESCRIPTIONS ARE MISSING: Do NOT just say data missing. Instead, infer potential duties/impact based on Job Title and Company Name. Example: If title is Senior Data Analyst, assume they handled SQL pipelines and reporting, and suggest they HIGHLIGHT those.\\n- Label your advice as [Generated Insight] when inferring.\\n\\n### Input Data Format\\nThe input data starts with a SUMMARY showing row counts per section (Positions, Skills, Connections, etc). Use this to understand available data.\\nRows are labeled like [POSITION] Title: ... | Company: ... or [SKILL] Skill Name: ...\\n\\n### REPORT STRUCTURE\\n\\n#### PART 1: The Red Flag Audit\\n1. Positions Analysis: Analyze each job title vs duration. For each role without a description, list 3 high-impact bullet point keywords they SHOULD add.\\n2. Skills Audit: Group skills by category (Tech, Soft Skills, Tools). Suggest 5 modern skills missing from their profile based on their recent roles.\\n3. Profile Optimization: Based on their most recent role and skills, write a suggested LinkedIn Headline (max 120 chars).\\n\\n#### PART 2: The Action Plan\\n1. Content Strategy: Suggest 3 specific LinkedIn post ideas based on their skills or roles.\\n2. Network Strategy: Based on their industry and connection data, advise on who to connect with next.\\n3. GitHub Synergy: If GitHub repos are present, suggest which projects to feature on LinkedIn and how to describe them.\\n\\nFormat your entire response in clean Markdown with headers and bullet points.\\n\\n--- USER DATA START ---\\n\\n\" + $json.text_context\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.7,\n      \"maxOutputTokens\": 4000\n    }\n  }\n}}",
         "options": {}
       },
       "id": "groq-analysis",
-      "name": "AI Analysis (Groq)",
+      "name": "AI Analysis (Gemini)",
       "position": [
         2064,
         304
       ],
       "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.2,
-      "credentials": {
-        "groqApi": {
-          "id": "mRrCh5Clg7Yfqdv8",
-          "name": "Manojkumarw13-Groq"
-        }
-      }
+      "typeVersion": 4.2
     },
     {
       "parameters": {
-        "jsCode": "const markdown = $input.item.json.choices[0].message.content;\n\nlet html = markdown\n  .replace(/^### (.*$)/gim, '<h3>$1</h3>')\n  .replace(/^## (.*$)/gim, '<h2>$1</h2>')\n  .replace(/^# (.*$)/gim, '<h1>$1</h1>')\n  .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')\n  .replace(/\\*(.*?)\\*/g, '<em>$1</em>')\n  .replace(/\\n/g, '<br>');\n\nreturn [{\n  json: {\n    html: html,\n    original: markdown\n  }\n}];"
+        "jsCode": "const markdown = $input.item.json.candidates[0].content.parts[0].text;\n\nlet html = markdown\n  .replace(/^### (.*$)/gim, '<h3>$1</h3>')\n  .replace(/^## (.*$)/gim, '<h2>$1</h2>')\n  .replace(/^# (.*$)/gim, '<h1>$1</h1>')\n  .replace(/\\*\\*(.*?)\\*\\*/g, '<strong>$1</strong>')\n  .replace(/\\*(.*?)\\*/g, '<em>$1</em>')\n  .replace(/\\n/g, '<br>');\n\nreturn [{\n  json: {\n    html: html,\n    original: markdown\n  }\n}];"
       },
       "id": "markdown-to-html",
       "name": "Convert to HTML",
@@ -317,7 +309,7 @@
     }
   ],
   "connections": {
-    "AI Analysis (Groq)": {
+    "AI Analysis (Gemini)": {
       "main": [
         [
           {
@@ -349,7 +341,7 @@
         [
           {
             "index": 0,
-            "node": "AI Analysis (Groq)",
+            "node": "AI Analysis (Gemini)",
             "type": "main"
           }
         ]

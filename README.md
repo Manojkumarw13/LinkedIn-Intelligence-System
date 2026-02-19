@@ -1,13 +1,13 @@
 # LinkedIn Intelligence System
 
 ![N8N](https://img.shields.io/badge/N8N-Automation-EA4B71?style=for-the-badge&logo=n8n&logoColor=white)
-![Groq](https://img.shields.io/badge/Groq-AI%20Analysis-F55036?style=for-the-badge&logo=ai&logoColor=white)
+![Gemini](https://img.shields.io/badge/Google%20Gemini-1.5%20Flash-4285F4?style=for-the-badge&logo=google&logoColor=white)
 ![Google Drive](https://img.shields.io/badge/Google%20Drive-Storage-4285F4?style=for-the-badge&logo=googledrive&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-Integration-181717?style=for-the-badge&logo=github&logoColor=white)
 
 ![Status](https://img.shields.io/badge/STATUS-PRODUCTION%20READY-success?style=flat-square)
 ![Architecture](https://img.shields.io/badge/ARCHITECTURE-MICROSERVICES-blueviolet?style=flat-square)
-![AI Model](https://img.shields.io/badge/AI-Llama%203.3%2070B-orange?style=flat-square)
+![AI Model](https://img.shields.io/badge/AI-Gemini%201.5%20Flash-blue?style=flat-square)
 ![License](https://img.shields.io/badge/LICENSE-MIT-blue?style=flat-square)
 
 An automated n8n workflow that analyzes your LinkedIn data monthly, generates strategic insights using AI, and delivers actionable recommendations to improve your professional profile.
@@ -34,7 +34,7 @@ flowchart LR
     I --> J["Data Merger
     Format for AI"]
     J --> K["AI Analysis
-    Groq Llama 3.3"]
+    Gemini 1.5 Flash"]
     K --> L["Convert to HTML"]
     L --> M["Send Email Report"]
     M --> N["Delete Processed File"]
@@ -55,7 +55,7 @@ The system follows a modern microservices-like architecture with clear separatio
 - **Trigger Layer**: Automated monthly schedule (1st of each month at 9:00 AM)
 - **Data Sources**: Google Drive (LinkedIn exports) + GitHub API (repository data)
 - **Processing Pipeline**: Extract → Filter → Parse → Merge
-- **AI Analysis**: Groq API with Llama 3.3 70B model
+- **AI Analysis**: Google Gemini 1.5 Flash (1M Token Context)
 - **Output**: HTML report generation and email delivery
 - **Cleanup**: Automatic file deletion post-processing
 
@@ -79,7 +79,7 @@ This system automatically:
 
 - Fetches LinkedIn export data from Google Drive
 - Analyzes your GitHub repositories
-- Generates AI-powered insights using Groq (Llama 3.3 70B)
+- Generates AI-powered insights using Google Gemini 1.5 Flash (1M Token Context)
 - Delivers monthly strategic reports via email
 - Provides actionable recommendations for profile optimization
 
@@ -102,7 +102,8 @@ This system automatically:
 
 ### 🤖 AI-Powered Insights
 
-- Uses Groq's Llama 3.3 70B model (free tier)
+- Uses Google's Gemini 1.5 Flash model (1M context window)
+- Processes entire 500M+ record warehouse context without truncation
 - Analyzes Positions, Skills, Connections, Education, and Projects
 - Generates strategic recommendations based on your actual data
 
@@ -116,7 +117,7 @@ Before setting up, ensure you have:
 - [ ] Google Drive account with API access
 - [ ] Gmail account
 - [ ] GitHub account
-- [ ] Groq API key (free at [console.groq.com](https://console.groq.com))
+- [ ] Google Gemini API key (free at [aistudio.google.com](https://aistudio.google.com))
 - [ ] LinkedIn data export (Settings & Privacy → Data Privacy → Get a copy of your data)
 
 ---
@@ -133,13 +134,12 @@ Before setting up, ensure you have:
 4. Scopes: Check `repo` and `user`
 5. Copy the token immediately
 
-#### Groq API Key
+#### Google Gemini API Key
 
-1. Visit [console.groq.com](https://console.groq.com)
-2. Sign up/Login (Google login works)
-3. Click **API Keys** → **Create API Key**
-4. Name: "n8n"
-5. Copy the key (starts with `gsk_...`)
+1. Visit [aistudio.google.com](https://aistudio.google.com/app/apikey)
+2. Sign in with Google
+3. Click **Get API key** → **Create API key in new project**
+4. Copy the key (starts with `AIza...`)
 
 ### 2. Import the Workflow
 
@@ -156,7 +156,7 @@ Click on each node and select/create credentials:
 - **Google Drive OAuth2** (for nodes: Google Drive List, Download, Delete)
 - **Gmail OAuth2** (for node: Send Email Report)
 - **GitHub** (for node: Get GitHub Repos)
-- **Groq** (for node: AI Analysis)
+- **Groq** (REMOVED - API Key embedded in URL for Gemini)
 
 ### 4. Update Configuration
 
@@ -205,13 +205,9 @@ Once testing succeeds, toggle **Active** in the top-right corner.
 3. Paste the token in n8n
 4. Note the Credential ID
 
-#### 1.4 Groq API
+#### 1.4 Gemini API
 
-1. Visit [console.groq.com](https://console.groq.com) and create a free account
-2. Generate an API key
-3. In n8n: **Add Credential** → "Groq"
-4. Paste your API key
-5. Note the Credential ID
+The Gemini API key is embedded directly in the HTTP Request URL (`?key=YOUR_KEY`). You do NOT need a credential in n8n for this version.
 
 ### Step 2: Prepare Google Drive
 
@@ -223,16 +219,16 @@ Once testing succeeds, toggle **Active** in the top-right corner.
 
 Replace these placeholders in the workflow:
 
-| Node                     | Placeholder                       | Replace With                |
-| ------------------------ | --------------------------------- | --------------------------- |
-| Google Drive List        | `YOUR_FOLDER_ID_HERE`             | Your Google Drive folder ID |
-| Google Drive List        | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID          |
-| Download LinkedIn Export | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID          |
-| Get GitHub Repos         | `YOUR_GITHUB_CREDENTIAL_ID`       | Your credential ID          |
-| AI Analysis (Groq)       | `YOUR_GROQ_CREDENTIAL_ID`         | Your credential ID          |
-| Send Email Report        | `YOUR_EMAIL@example.com`          | Your actual email           |
-| Send Email Report        | `YOUR_GMAIL_CREDENTIAL_ID`        | Your credential ID          |
-| Delete Processed File    | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID          |
+| Node                     | Placeholder                       | Replace With                 |
+| ------------------------ | --------------------------------- | ---------------------------- |
+| Google Drive List        | `YOUR_FOLDER_ID_HERE`             | Your Google Drive folder ID  |
+| Google Drive List        | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
+| Download LinkedIn Export | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
+| Get GitHub Repos         | `YOUR_GITHUB_CREDENTIAL_ID`       | Your credential ID           |
+| AI Analysis (Gemini)     | URL `key=...`                     | Your API Key directly in URL |
+| Send Email Report        | `YOUR_EMAIL@example.com`          | Your actual email            |
+| Send Email Report        | `YOUR_GMAIL_CREDENTIAL_ID`        | Your credential ID           |
+| Delete Processed File    | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
 
 > **⚠️ IMPORTANT**: The "Delete Processed File" node is disabled by default for safety. Enable it only after successful testing!
 
@@ -298,7 +294,8 @@ Replace these placeholders in the workflow:
 
 #### 11. AI Analysis (Groq)
 
-- **Purpose**: Sends data to Groq's AI (Llama 3.3 70B) for analysis
+- **Purpose**: Sends data to Google's Gemini 1.5 Flash for analysis
+- **New Capability**: 1M Input Tokens allows processing ALL LinkedIn data (Jobs, Projects, Skills) without truncation.
 - **Configuration**: 🔧 Credential required
 - **Analysis Includes**:
   - Red flags (keyword gaps, stagnation, zombie skills)
@@ -519,4 +516,16 @@ This project is provided as-is for personal use.
 
 ---
 
-**Built with n8n, Groq AI, and automation best practices.**
+**Built with n8n, Google Gemini 1.5 Flash, and automation best practices.**
+
+---
+
+## 🔮 Future Roadmap (Optimization Plan)
+
+Planned improvements to make the analysis even smarter:
+
+1. **Target Role Context**: Add input for your desired job title (e.g., "Staff Data Engineer") to get gap analysis.
+2. **Deep GitHub Analysis**: Fetch `README.md` content from top repos instead of just descriptions.
+3. **Resume Parsing**: Compare PDF resume against LinkedIn profile to find missed skills.
+
+See [optimization_plan.md](optimization_plan.md) for details.
