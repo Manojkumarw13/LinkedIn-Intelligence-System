@@ -19,10 +19,7 @@
       },
       "id": "schedule-trigger",
       "name": "Monthly Schedule",
-      "position": [
-        256,
-        304
-      ],
+      "position": [256, 304],
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.2
     },
@@ -44,18 +41,9 @@
       },
       "id": "google-drive-list",
       "name": "Google Drive List",
-      "position": [
-        464,
-        304
-      ],
+      "position": [464, 304],
       "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "lY6YHm1M8PFDfTFQ",
-          "name": "Manojmanoj22250"
-        }
-      }
+      "typeVersion": 3
     },
     {
       "parameters": {
@@ -63,10 +51,7 @@
       },
       "id": "diff-check",
       "name": "Diff Check",
-      "position": [
-        656,
-        304
-      ],
+      "position": [656, 304],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
     },
@@ -82,18 +67,9 @@
       },
       "id": "google-drive-download",
       "name": "Download LinkedIn Export",
-      "position": [
-        864,
-        208
-      ],
+      "position": [864, 208],
       "type": "n8n-nodes-base.googleDrive",
-      "typeVersion": 3,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "lY6YHm1M8PFDfTFQ",
-          "name": "Manojmanoj22250"
-        }
-      }
+      "typeVersion": 3
     },
     {
       "parameters": {
@@ -108,28 +84,16 @@
       },
       "id": "github-repos",
       "name": "Get GitHub Repos",
-      "position": [
-        864,
-        400
-      ],
+      "position": [864, 400],
       "type": "n8n-nodes-base.github",
       "typeVersion": 1,
-      "webhookId": "69b6db16-c2a4-4d13-a65d-1e1433d7a881",
-      "credentials": {
-        "githubApi": {
-          "id": "24zrgxkdpLY1SY4D",
-          "name": "Manojkumarw13-Github"
-        }
-      }
+      "webhookId": "69b6db16-c2a4-4d13-a65d-1e1433d7a881"
     },
     {
       "parameters": {},
       "id": "decompress",
       "name": "Decompress ZIP",
-      "position": [
-        1056,
-        208
-      ],
+      "position": [1056, 208],
       "type": "n8n-nodes-base.compression",
       "typeVersion": 1
     },
@@ -189,10 +153,7 @@
       },
       "id": "filter-csvs",
       "name": "Filter Relevant CSVs",
-      "position": [
-        1264,
-        208
-      ],
+      "position": [1264, 208],
       "type": "n8n-nodes-base.filter",
       "typeVersion": 2
     },
@@ -202,10 +163,7 @@
       },
       "id": "read-csv",
       "name": "Read CSV Files",
-      "position": [
-        1456,
-        208
-      ],
+      "position": [1456, 208],
       "type": "n8n-nodes-base.spreadsheetFile",
       "typeVersion": 2
     },
@@ -213,10 +171,7 @@
       "parameters": {},
       "id": "merge-data",
       "name": "Merge LinkedIn + GitHub",
-      "position": [
-        1664,
-        304
-      ],
+      "position": [1664, 304],
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3
     },
@@ -226,17 +181,14 @@
       },
       "id": "merger-code",
       "name": "Data Merger",
-      "position": [
-        1856,
-        304
-      ],
+      "position": [1856, 304],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=AIzaSyCT5pLRHy7mFuzTVSuRCF8UIBF7EpKFQtM",
+        "url": "https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent?key=YOUR_API_KEY",
         "sendBody": true,
         "specifyBody": "json",
         "jsonBody": "={{ \n  {\n    \"contents\": [\n      {\n        \"parts\": [\n          {\n            \"text\": \"You are an elite LinkedIn Profile Strategist.\\n\\nYour goal is to audit the user's data and generate a strategic intelligence report.\\n\\n### CRITICAL INSTRUCTION: HANDLING MISSING DATA\\nLinkedIn data exports are often sparse (e.g., missing descriptions).\\n- IF DESCRIPTIONS ARE MISSING: Do NOT just say data missing. Instead, infer potential duties/impact based on Job Title and Company Name. Example: If title is Senior Data Analyst, assume they handled SQL pipelines and reporting, and suggest they HIGHLIGHT those.\\n- Label your advice as [Generated Insight] when inferring.\\n\\n### Input Data Format\\nThe input data starts with a SUMMARY showing row counts per section (Positions, Skills, Connections, etc). Use this to understand available data.\\nRows are labeled like [POSITION] Title: ... | Company: ... or [SKILL] Skill Name: ...\\n\\n### REPORT STRUCTURE\\n\\n#### PART 1: The Red Flag Audit\\n1. Positions Analysis: Analyze each job title vs duration. For each role without a description, list 3 high-impact bullet point keywords they SHOULD add.\\n2. Skills Audit: Group skills by category (Tech, Soft Skills, Tools). Suggest 5 modern skills missing from their profile based on their recent roles.\\n3. Profile Optimization: Based on their most recent role and skills, write a suggested LinkedIn Headline (max 120 chars).\\n\\n#### PART 2: The Action Plan\\n1. Content Strategy: Suggest 3 specific LinkedIn post ideas based on their skills or roles.\\n2. Network Strategy: Based on their industry and connection data, advise on who to connect with next.\\n3. GitHub Synergy: If GitHub repos are present, suggest which projects to feature on LinkedIn and how to describe them.\\n\\nFormat your entire response in clean Markdown with headers and bullet points.\\n\\n--- USER DATA START ---\\n\\n\" + $json.text_context\n          }\n        ]\n      }\n    ],\n    \"generationConfig\": {\n      \"temperature\": 0.7,\n      \"maxOutputTokens\": 4000\n    }\n  }\n}}",
@@ -244,10 +196,7 @@
       },
       "id": "groq-analysis",
       "name": "AI Analysis (Gemini)",
-      "position": [
-        2064,
-        304
-      ],
+      "position": [2064, 304],
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2
     },
@@ -257,10 +206,7 @@
       },
       "id": "markdown-to-html",
       "name": "Convert to HTML",
-      "position": [
-        2256,
-        304
-      ],
+      "position": [2256, 304],
       "type": "n8n-nodes-base.code",
       "typeVersion": 2
     },
@@ -273,19 +219,10 @@
       },
       "id": "send-email",
       "name": "Send Email Report",
-      "position": [
-        2464,
-        208
-      ],
+      "position": [2464, 208],
       "type": "n8n-nodes-base.gmail",
       "typeVersion": 2.1,
-      "webhookId": "bf746f67-2084-4abf-a1b6-6efeae54d4e4",
-      "credentials": {
-        "gmailOAuth2": {
-          "id": "zeigTHUyap3IpnSO",
-          "name": "Manojkumarw13"
-        }
-      }
+      "webhookId": "bf746f67-2084-4abf-a1b6-6efeae54d4e4"
     },
     {
       "parameters": {
@@ -293,18 +230,9 @@
       },
       "id": "delete-file",
       "name": "Delete Processed File",
-      "position": [
-        2464,
-        400
-      ],
+      "position": [2464, 400],
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "lY6YHm1M8PFDfTFQ",
-          "name": "Manojmanoj22250"
-        }
-      },
       "disabled": true
     }
   ],
