@@ -153,10 +153,9 @@ Click on each node and select/create credentials:
 
 **Required Credentials:**
 
-- **Google Drive OAuth2** (for nodes: Google Drive List, Download, Delete)
+- **Google Drive OAuth2 API** (for nodes: Google Drive List, Download LinkedIn Export, Delete Processed File)
 - **Gmail OAuth2** (for node: Send Email Report)
-- **GitHub** (for node: Get GitHub Repos)
-- **Groq** (REMOVED - API Key embedded in URL for Gemini)
+- **GitHub API** (for node: Get GitHub Repos)
 
 ### 4. Update Configuration
 
@@ -217,18 +216,16 @@ The Gemini API key is embedded directly in the HTTP Request URL (`?key=YOUR_KEY`
 
 ### Step 3: Configure the Workflow
 
-Replace these placeholders in the workflow:
+Replace the placeholders and select credentials for these nodes in the n8n UI:
 
-| Node                     | Placeholder                       | Replace With                 |
-| ------------------------ | --------------------------------- | ---------------------------- |
-| Google Drive List        | `YOUR_FOLDER_ID_HERE`             | Your Google Drive folder ID  |
-| Google Drive List        | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
-| Download LinkedIn Export | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
-| Get GitHub Repos         | `YOUR_GITHUB_CREDENTIAL_ID`       | Your credential ID           |
-| AI Analysis (Gemini)     | URL `key=...`                     | Your API Key directly in URL |
-| Send Email Report        | `YOUR_EMAIL@example.com`          | Your actual email            |
-| Send Email Report        | `YOUR_GMAIL_CREDENTIAL_ID`        | Your credential ID           |
-| Delete Processed File    | `YOUR_GOOGLE_DRIVE_CREDENTIAL_ID` | Your credential ID           |
+| Node                     | Action Required                                |
+| ------------------------ | ---------------------------------------------- |
+| Google Drive List        | Select Google Drive Credential & Set Folder ID |
+| Download LinkedIn Export | Select Google Drive Credential                 |
+| Get GitHub Repos         | Select GitHub Credential                       |
+| AI Analysis (Gemini)     | Replace `YOUR_API_KEY` in the URL parameter    |
+| Send Email Report        | Select Gmail Credential & Set `Send To` email  |
+| Delete Processed File    | Select Google Drive Credential                 |
 
 > **⚠️ IMPORTANT**: The "Delete Processed File" node is disabled by default for safety. Enable it only after successful testing!
 
