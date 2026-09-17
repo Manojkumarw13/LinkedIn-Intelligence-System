@@ -289,11 +289,11 @@ Replace the placeholders and select credentials for these nodes in the n8n UI:
 - **Configuration**: ✅ Script embedded
 - **Output**: Single `text_context` variable with all data
 
-#### 11. AI Analysis (Groq)
+#### 11. AI Analysis (Gemini)
 
 - **Purpose**: Sends data to Google's Gemini 1.5 Flash for analysis
 - **New Capability**: 1M Input Tokens allows processing ALL LinkedIn data (Jobs, Projects, Skills) without truncation.
-- **Configuration**: 🔧 Credential required
+- **Configuration**: 🔧 URL parameter API Key required (`?key=YOUR_API_KEY`)
 - **Analysis Includes**:
   - Red flags (keyword gaps, stagnation, zombie skills)
   - 15-point profile scorecard
