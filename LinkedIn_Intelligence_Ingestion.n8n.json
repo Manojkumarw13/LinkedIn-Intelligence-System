@@ -31,10 +31,8 @@
         "filter": {
           "folderId": {
             "__rl": true,
-            "value": "1uJCL0t5MTfJR3OsqDkRsGaZ1nU0gbR_Q",
-            "mode": "list",
-            "cachedResultName": "LinkedIn Report",
-            "cachedResultUrl": "https://drive.google.com/drive/folders/1uJCL0t5MTfJR3OsqDkRsGaZ1nU0gbR_Q"
+            "value": "YOUR_FOLDER_ID_HERE",
+            "mode": "list"
           }
         },
         "options": {}
@@ -78,7 +76,7 @@
           "__regex": "https:\\/\\/(?:[^/]+)\\/([-_0-9a-zA-Z]+)",
           "__rl": true,
           "mode": "url",
-          "value": "https://github.com/Manojkumarw13"
+          "value": "https://github.com/YOUR_GITHUB_USERNAME"
         },
         "returnAll": true
       },
@@ -177,7 +175,7 @@
     },
     {
       "parameters": {
-        "jsCode": "let fullText = \"\";\nconst items = $input.all();\nconst MAX_ROWS = 5000;\n\n// Track statistics\nconst stats = {\n  GitHub: 0,\n  Positions: 0,\n  Connections: 0,\n  Skills: 0,\n  Education: 0,\n  Profile: 0,\n  Unknown: 0\n};\n\nif (items.length > 0) {\n  let currentSection = \"\";\n  \n  for (let i = 0; i < items.length && i < MAX_ROWS; i++) {\n    const row = items[i].json;\n    let sectionHeader = \"\";\n    \n    // identify source type\n    if (row.html_url && row.full_name) {\n       stats.GitHub++;\n       sectionHeader = \"GITHUB_REPO\";\n    } else if (row['Company Name'] !== undefined) {\n       stats.Positions++;\n       sectionHeader = \"POSITION\";\n    } else if (row['First Name'] !== undefined && row['Connected On'] !== undefined) {\n       stats.Connections++;\n       sectionHeader = \"CONNECTION\";\n    } else if (row['Skill Name'] !== undefined) {\n       stats.Skills++;\n       sectionHeader = \"SKILL\";\n    } else if (row['School Name'] !== undefined) {\n       stats.Education++;\n       sectionHeader = \"EDUCATION\";\n    } else if (row['Headline'] !== undefined || row['Summary'] !== undefined) {\n       stats.Profile++;\n       sectionHeader = \"PROFILE\";\n    } else {\n       stats.Unknown++;\n       sectionHeader = \"UNKNOWN_DATA\";\n    }\n\n    const rowString = Object.entries(row)\n      .filter(([key, value]) => value !== '' && value !== null)\n      .map(([key, value]) => `${key}: ${value}`)\n      .join(' | ');\n      \n    if (rowString.length > 0) {\n      fullText += `[${sectionHeader}] ${rowString}\\n`;\n    }\n  }\n  \n  // Prepend summary\n  let summary = \"### INPUT DATA SUMMARY:\\n\";\n  for (const [key, count] of Object.entries(stats)) {\n    if (count > 0) summary += `- ${key}: ${count} rows\\n`;\n  }\n  summary += \"\\n### RAW DATA START:\\n\";\n  fullText = summary + fullText;\n  \n} else {\n  fullText = \"No data found in the processed CSV files.\";\n}\n\nreturn [{\n  json: {\n    text_context: fullText\n  }\n}];"
+        "jsCode": "let fullText = \"\";\nconst items = $input.all();\nconst MAX_ROWS = 5000;\n\n// Track statistics\nconst stats = {\n  GitHub: 0,\n  Positions: 0,\n  Connections: 0,\n  Skills: 0,\n  Education: 0,\n  Profile: 0,\n  Unknown: 0\n};\n\nif (items.length > 0) {\n  for (let i = 0; i < items.length && i < MAX_ROWS; i++) {\n    const row = items[i].json;\n    let sectionHeader = \"\";\n    \n    // identify source type\n    if (row.html_url && row.full_name) {\n       stats.GitHub++;\n       sectionHeader = \"GITHUB_REPO\";\n    } else if (row['Company Name'] !== undefined) {\n       stats.Positions++;\n       sectionHeader = \"POSITION\";\n    } else if (row['First Name'] !== undefined && row['Connected On'] !== undefined) {\n       stats.Connections++;\n       sectionHeader = \"CONNECTION\";\n    } else if (row['Skill Name'] !== undefined) {\n       stats.Skills++;\n       sectionHeader = \"SKILL\";\n    } else if (row['School Name'] !== undefined) {\n       stats.Education++;\n       sectionHeader = \"EDUCATION\";\n    } else if (row['Headline'] !== undefined || row['Summary'] !== undefined) {\n       stats.Profile++;\n       sectionHeader = \"PROFILE\";\n    } else {\n       stats.Unknown++;\n       sectionHeader = \"UNKNOWN_DATA\";\n    }\n\n    const rowString = Object.entries(row)\n      .filter(([key, value]) => value !== '' && value !== null)\n      .map(([key, value]) => `${key}: ${value}`)\n      .join(' | ');\n      \n    if (rowString.length > 0) {\n      fullText += `[${sectionHeader}] ${rowString}\\n`;\n    }\n  }\n  \n  // Prepend summary\n  let summary = \"### INPUT DATA SUMMARY:\\n\";\n  for (const [key, count] of Object.entries(stats)) {\n    if (count > 0) summary += `- ${key}: ${count} rows\\n`;\n  }\n  summary += \"\\n### RAW DATA START:\\n\";\n  fullText = summary + fullText;\n  \n} else {\n  fullText = \"No data found in the processed CSV files.\";\n}\n\nreturn [{\n  json: {\n    text_context: fullText\n  }\n}];"
       },
       "id": "merger-code",
       "name": "Data Merger",
@@ -212,7 +210,7 @@
     },
     {
       "parameters": {
-        "sendTo": "manojkumarw13@gmail.com",
+        "sendTo": "YOUR_EMAIL@example.com",
         "subject": "Monthly LinkedIn Intelligence Report - {{ new Date().toLocaleDateString() }}",
         "message": "={{ $json.html }}",
         "options": {}
@@ -394,58 +392,7 @@
   "activeVersionId": null,
   "versionCounter": 122,
   "triggerCount": 0,
-  "shared": [
-    {
-      "updatedAt": "2026-01-31T15:45:26.179Z",
-      "createdAt": "2026-01-31T15:45:26.179Z",
-      "role": "workflow:owner",
-      "workflowId": "0lVpNdPn4oqm2L3j",
-      "projectId": "BhP5EjgJK6XuNWwz",
-      "project": {
-        "updatedAt": "2025-05-21T04:00:33.956Z",
-        "createdAt": "2025-05-21T03:59:38.381Z",
-        "id": "BhP5EjgJK6XuNWwz",
-        "name": "Manoj Kumar M <manojkumarw13@gmail.com>",
-        "type": "personal",
-        "icon": null,
-        "description": null,
-        "creatorId": "f8fe2624-5fd5-4baf-b246-d8d2e1701e19",
-        "projectRelations": [
-          {
-            "updatedAt": "2025-05-21T03:59:38.381Z",
-            "createdAt": "2025-05-21T03:59:38.381Z",
-            "userId": "f8fe2624-5fd5-4baf-b246-d8d2e1701e19",
-            "projectId": "BhP5EjgJK6XuNWwz",
-            "user": {
-              "updatedAt": "2026-02-04T05:06:33.000Z",
-              "createdAt": "2025-05-21T03:59:37.864Z",
-              "id": "f8fe2624-5fd5-4baf-b246-d8d2e1701e19",
-              "email": "manojkumarw13@gmail.com",
-              "firstName": "Manoj",
-              "lastName": "Kumar M",
-              "personalizationAnswers": {
-                "version": "v4",
-                "personalization_survey_submitted_at": "2025-05-21T04:02:28.779Z",
-                "personalization_survey_n8n_version": "1.93.0",
-                "companySize": "personalUser",
-                "companyType": "saas",
-                "role": "data-science",
-                "reportedSource": "youtube"
-              },
-              "settings": {
-                "userActivated": false,
-                "easyAIWorkflowOnboarded": true
-              },
-              "disabled": false,
-              "mfaEnabled": false,
-              "lastActiveAt": "2026-02-04",
-              "isPending": false
-            }
-          }
-        ]
-      }
-    }
-  ],
+  "shared": [],
   "tags": [],
   "activeVersion": null
 }
